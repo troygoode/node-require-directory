@@ -1,0 +1,36 @@
+{
+  "author": "Troy Goode <troygoode@gmail.com> (http://github.com/troygoode/)",
+  "name": "require-directory",
+  "version": "0.0.1",
+  "description": "Recursively iterates over specified directory, requiring each file, and returning a nested hash structure containing those libraries.",
+  "keywords": ["require", "directory", "library", "recursive"],
+  "homepage": "https://github.com/troygoode/node-require-directory/",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/troygoode/node-require-directory.git"
+  },
+  "contributors": [
+    {
+      "name": "Troy Goode",
+      "email": "troygoode@gmail.com",
+      "web": "http://github.com/troygoode/"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "bugs": {
+    "url": "http://github.com/troygoode/node-require-directory/issues/"
+  },
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {},
+  "bin": {}
+}
