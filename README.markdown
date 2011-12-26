@@ -38,4 +38,4 @@ app.get '/logout', routes.auth.logout;
 
 ## Author
 
-[Troy Goode](https://github.com/TroyGoode) ([troygoode@gmail.com](mailto:troygoode@gmail.com)
+[Troy Goode](https://github.com/TroyGoode) ([troygoode@gmail.com](mailto:troygoode@gmail.com))
