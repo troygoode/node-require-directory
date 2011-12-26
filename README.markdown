@@ -15,12 +15,10 @@ $ npm install require-directory
 Given a directory structure like so:
 
 * app.js
-* routes/
-  * home.js
-  * auth/
-    * register.js
-    * login.js
-    * logout.js
+* routes/home.js
+* routes/auth/login.js
+* routes/auth/logout.js
+* routes/auth/register.js
 
 ```javascript
 var requireDirectory = require('require-directory');
