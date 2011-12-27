@@ -22,7 +22,7 @@ Given a directory structure like so:
 
 ```javascript
 var requireDirectory = require('require-directory');
-var routes = requireDirectory('./routes/');
+var routes = requireDirectory(module, './routes/');
 
 // snip
 
