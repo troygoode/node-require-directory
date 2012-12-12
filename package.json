@@ -30,7 +30,11 @@
     "node": ">=0.6.0"
   },
   "dependencies": {},
-  "devDependencies": {},
-  "scripts": {},
+  "devDependencies": {
+    "mocha": "latest"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
   "bin": {}
 }
