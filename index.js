@@ -1,13 +1,17 @@
 var fs = require('fs');
+var join = require('path').join;
+var resolve = require('path').resolve;
 
 var requireDirectory = function(m, path){
   var retval = {};
+  path = resolve(path);
   fs.readdirSync(path).forEach(function(filename){
-    if(fs.statSync(path + filename).isDirectory()){
-      retval[filename] = requireDirectory(m, path + filename + '/');
+    var joined = join(path, filename);
+    if(fs.statSync(joined).isDirectory()){
+      retval[filename] = requireDirectory(m, joined);
     }else{
       var name = filename.substring(0, filename.lastIndexOf('.'));
-      retval[name] = m.require(path + filename);
+      retval[name] = m.require(joined);
     }
   });
   return retval;
