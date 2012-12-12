@@ -32,6 +32,52 @@ app.get '/login', routes.auth.login;
 app.get '/logout', routes.auth.logout;
 ```
 
+### Usage + Blacklist Regex
+
+Using the same directory structure from above:
+
+```javascript
+var excludeLogout = /logout.js$/;
+var requireDirectory = require('require-directory');
+var routes = requireDirectory(module, './routes/', excludeLogout);
+
+// snip
+
+app.get '/', routes.home;
+app.get '/register', routes.auth.register;
+app.get '/login', routes.auth.login;
+//app.get '/logout', routes.auth.logout; //<-- not present
+```
+
+### Usage + Path-checking Delegate
+
+Using the same directory structure from above:
+
+```javascript
+var excludeLogout = function(path){
+  if(path.indexOf('routes/auth/logout.js') >= 0){
+    return false;
+  }else{
+    return true;
+  }
+};
+var requireDirectory = require('require-directory');
+var routes = requireDirectory(module, './routes/', excludeLogout);
+
+// snip
+
+app.get '/', routes.home;
+app.get '/register', routes.auth.register;
+app.get '/login', routes.auth.login;
+//app.get '/logout', routes.auth.logout; //<-- not present
+```
+
+## Run Unit Tests
+
+```bash
+$ npm test
+```
+
 ## License
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
