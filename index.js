@@ -2,18 +2,18 @@ var fs = require('fs');
 var join = require('path').join;
 var resolve = require('path').resolve;
 
-var requireDirectory = function(m, path, opt){
+var requireDirectory = function(m, path, exclude){
   var delegate = function(){ return true; };
-  if(opt instanceof RegExp){
+  if(exclude instanceof RegExp){
     delegate = function(path){
-      if(opt.test(path)){
+      if(exclude.test(path)){
         return false;
       }else{
         return true;
       }
     };
-  }else if(opt && {}.toString.call(opt) === '[object Function]'){
-    delegate = opt;
+  }else if(exclude && {}.toString.call(exclude) === '[object Function]'){
+    delegate = exclude;
   }
 
   var retval = {};
