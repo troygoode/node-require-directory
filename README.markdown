@@ -55,7 +55,7 @@ Using the same directory structure from above:
 
 ```javascript
 var excludeLogout = function(path){
-  if(path.indexOf('routes/auth/logout.js') >= 0){
+  if(/routes\/auth\/logout.js$/.test(path)){
     return false;
   }else{
     return true;
