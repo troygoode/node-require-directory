@@ -43,44 +43,26 @@ app.get '/logout', routes.auth.logout;
 
 *Note that `routes.index` will be `undefined` as you would hope.*
 
-### Usage + Blacklist Regex
+### Usage + Blacklisting/Whitelisting
 
-Using the same directory structure from above:
+`require-directory` takes an optional third parameter that defines which files that should not be included in the hash/tree via either a RegExp or a function. If you pass a function in, it should take a single argument (the path to a file) and return true if that file should be included in the tree. If you pass a RegExp it will be considered a blacklist - files that match that RegExp will **not** be included in the tree:
 
 ```javascript
-var excludeLogout = /logout.js$/;
+var blacklist = /dontinclude.js$/;
 var requireDirectory = require('require-directory');
-var routes = requireDirectory(module, './routes/', excludeLogout);
-
-// snip
-
-app.get '/', routes.home;
-app.get '/register', routes.auth.register;
-app.get '/login', routes.auth.login;
-//app.get '/logout', routes.auth.logout; //<-- not present
+var hash = requireDirectory(module, __dirname, blacklist);
 ```
 
-### Usage + Path-checking Delegate
-
-Using the same directory structure from above:
-
 ```javascript
-var excludeLogout = function(path){
-  if(/routes\/auth\/logout.js$/.test(path)){
-    return false;
+var check = function(path){
+  if(/dontinclude.js$/.test(path)){
+    return false; // don't include
   }else{
-    return true;
+    return true; // go ahead and include
   }
 };
 var requireDirectory = require('require-directory');
-var routes = requireDirectory(module, './routes/', excludeLogout);
-
-// snip
-
-app.get '/', routes.home;
-app.get '/register', routes.auth.register;
-app.get '/login', routes.auth.login;
-//app.get '/logout', routes.auth.logout; //<-- not present
+var hash = requireDirectory(module, __dirname, check);
 ```
 
 ## Run Unit Tests
