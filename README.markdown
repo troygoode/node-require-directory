@@ -45,7 +45,7 @@ app.get '/logout', routes.auth.logout;
 
 ### Specifying Another Directory
 
-You can specify which directory you want to build a tree of (if it isn't the current directory for whatever reason) by passing it as a second option. Not specifying the path (`requireDirectory(module)`) is the equivelant of `requireDirectory(module, __dirname)`:
+You can specify which directory you want to build a tree of (if it isn't the current directory for whatever reason) by passing it as the second parameter. Not specifying the path (`requireDirectory(module)`) is the equivelant of `requireDirectory(module, __dirname)`:
 
 ```javascript
 var requireDirectory = require('require-directory');
