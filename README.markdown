@@ -32,6 +32,39 @@ app.get '/login', routes.auth.login;
 app.get '/logout', routes.auth.logout;
 ```
 
+### Usage (as Index)
+
+A common pattern in node.js is to include an index file which creates a hash of the files in its current directory. Given a directory structure like so:
+
+* app.js
+* routes/index.js
+* routes/home.js
+* routes/auth/login.js
+* routes/auth/logout.js
+* routes/auth/register.js
+
+`index.js` would look like:
+
+```javascript
+var requireDirectory = require('require-directory');
+module.exports = requireDirectory(module, __dirname);
+```
+
+`app.js` could reference the routes like so:
+
+```javascript
+var routes = require('./routes');
+
+// snip
+
+app.get '/', routes.home;
+app.get '/register', routes.auth.register;
+app.get '/login', routes.auth.login;
+app.get '/logout', routes.auth.logout;
+```
+
+Note that `routes.index` will be `undefined` as you would hope.
+
 ### Usage + Blacklist Regex
 
 Using the same directory structure from above:
