@@ -21,7 +21,7 @@ A common pattern in node.js is to include an index file which creates a hash of 
 * routes/auth/logout.js
 * routes/auth/register.js
 
-`index.js` uses `require-directory` to build the hash rather than doing so manually:
+`routes/index.js` uses `require-directory` to build the hash rather than doing so manually:
 
 ```javascript
 var requireDirectory = require('require-directory');
