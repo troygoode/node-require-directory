@@ -10,28 +10,6 @@ Recursively iterates over specified directory, requiring each file, and returnin
 $ npm install require-directory
 ```
 
-### Usage
-
-Given a directory structure like so:
-
-* app.js
-* routes/home.js
-* routes/auth/login.js
-* routes/auth/logout.js
-* routes/auth/register.js
-
-```javascript
-var requireDirectory = require('require-directory');
-var routes = requireDirectory(module, './routes/');
-
-// snip
-
-app.get '/', routes.home;
-app.get '/register', routes.auth.register;
-app.get '/login', routes.auth.login;
-app.get '/logout', routes.auth.logout;
-```
-
 ### Usage (as Index)
 
 A common pattern in node.js is to include an index file which creates a hash of the files in its current directory. Given a directory structure like so:
@@ -43,14 +21,14 @@ A common pattern in node.js is to include an index file which creates a hash of 
 * routes/auth/logout.js
 * routes/auth/register.js
 
-`index.js` would look like:
+`index.js` uses `require-directory` to build the hash rather than doing so manually:
 
 ```javascript
 var requireDirectory = require('require-directory');
 module.exports = requireDirectory(module, __dirname);
 ```
 
-`app.js` could reference the routes like so:
+`app.js` references `routes/index.js` like any other module, but it now has a hash/tree of the exports from the `./routes/` directory:
 
 ```javascript
 var routes = require('./routes');
@@ -63,7 +41,7 @@ app.get '/login', routes.auth.login;
 app.get '/logout', routes.auth.logout;
 ```
 
-Note that `routes.index` will be `undefined` as you would hope.
+*Note that `routes.index` will be `undefined` as you would hope.*
 
 ### Usage + Blacklist Regex
 
