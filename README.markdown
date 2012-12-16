@@ -43,7 +43,7 @@ app.get '/logout', routes.auth.logout;
 
 *Note that `routes.index` will be `undefined` as you would hope.*
 
-### Usage + Blacklisting/Whitelisting
+### Blacklisting/Whitelisting
 
 `require-directory` takes an optional third parameter that defines which files that should not be included in the hash/tree via either a RegExp or a function. If you pass a function in, it should take a single argument (the path to a file) and return true if that file should be included in the tree. If you pass a RegExp it will be considered a blacklist - files that match that RegExp will **not** be included in the tree:
 
