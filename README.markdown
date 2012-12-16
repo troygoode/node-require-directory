@@ -25,7 +25,7 @@ A common pattern in node.js is to include an index file which creates a hash of 
 
 ```javascript
 var requireDirectory = require('require-directory');
-module.exports = requireDirectory(module, __dirname);
+module.exports = requireDirectory(module);
 ```
 
 `app.js` references `routes/index.js` like any other module, but it now has a hash/tree of the exports from the `./routes/` directory:
@@ -42,6 +42,15 @@ app.get '/logout', routes.auth.logout;
 ```
 
 *Note that `routes.index` will be `undefined` as you would hope.*
+
+### Specifying a Directory
+
+You can specify which directory you want to build a tree of (if it isn't the current directory for whatever reason) by passing it as a second option:
+
+```javascript
+var requireDirectory = require('require-directory');
+module.exports = requireDirectory(module);
+```
 
 ### Blacklisting/Whitelisting
 
