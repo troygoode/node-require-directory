@@ -4,7 +4,7 @@ Recursively iterates over specified directory, requiring each file, and returnin
 
 ## How To Use
 
-### Installation
+### Installation (via [npm](https://npmjs.org/package/require-directory))
 
 ```bash
 $ npm install require-directory
