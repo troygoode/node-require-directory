@@ -10,7 +10,7 @@ Recursively iterates over specified directory, requiring each file, and returnin
 $ npm install require-directory
 ```
 
-### Usage (as Index)
+### Usage
 
 A common pattern in node.js is to include an index file which creates a hash of the files in its current directory. Given a directory structure like so:
 
