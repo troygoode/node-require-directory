@@ -26,7 +26,7 @@ suite('require-directory', function(){
       };
 
       //act
-      var test = reqdir(module, PATH_TO_EXAMPLE, delegate); //path is slight weird because of mocha's module scoping
+      var test = reqdir(module, PATH_TO_EXAMPLE, delegate);
 
       //assert
       assert.equal('foo!', test.foo);
@@ -39,12 +39,21 @@ suite('require-directory', function(){
       var blacklist = /foo2.js$/;
 
       //act
-      var test = reqdir(module, PATH_TO_EXAMPLE, blacklist); //path is slight weird because of mocha's module scoping
+      var test = reqdir(module, PATH_TO_EXAMPLE, blacklist);
 
       //assert
       assert.equal('foo!', test.foo);
       assert.equal(undefined, test.foo2);
       assert.equal('baz!', test.bar.baz);
+    });
+
+    test('index should exclude itself', function(){
+      //act
+      var index = require('./example/index');
+
+      //assert
+      assert.equal('foo!', index.foo);
+      assert.equal(undefined, index.index);
     });
   });
 });

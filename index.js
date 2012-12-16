@@ -3,7 +3,10 @@ var join = require('path').join;
 var resolve = require('path').resolve;
 
 var requireDirectory = function(m, path, exclude){
+  var origin = m.filename;
   var delegate = function(){ return true; };
+  var retval = {};
+
   if(exclude instanceof RegExp){
     delegate = function(path){
       if(exclude.test(path)){
@@ -16,11 +19,10 @@ var requireDirectory = function(m, path, exclude){
     delegate = exclude;
   }
 
-  var retval = {};
   path = resolve(path);
   fs.readdirSync(path).forEach(function(filename){
     var joined = join(path, filename);
-    if(delegate(joined)){
+    if(joined !== origin && delegate(joined)){
       if(fs.statSync(joined).isDirectory()){
         retval[filename] = requireDirectory(m, joined, delegate);
       }else{
