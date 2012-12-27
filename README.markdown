@@ -2,7 +2,7 @@
 
 Recursively iterates over specified directory, requiring each file, and returning a nested hash structure containing those libraries.
 
-[![build status](https://secure.travis-ci.org/TroyGoode/require-directory.png)](http://travis-ci.org/TroyGoode/require-directory)
+[![build status](https://secure.travis-ci.org/TroyGoode/node-require-directory.png)](http://travis-ci.org/TroyGoode/node-require-directory)
 
 ## How To Use
 
