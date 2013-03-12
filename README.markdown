@@ -51,7 +51,7 @@ You can specify which directory you want to build a tree of (if it isn't the cur
 
 ```javascript
 var requireDirectory = require('require-directory');
-module.exports = requireDirectory(module, './some/other/directory');
+module.exports = requireDirectory(module, __dirname + '/some/subdirectory');
 ```
 
 ### Blacklisting/Whitelisting
