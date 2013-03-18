@@ -37,23 +37,23 @@ var routes = require('./routes');
 
 // snip
 
-app.get '/', routes.home;
-app.get '/register', routes.auth.register;
-app.get '/login', routes.auth.login;
-app.get '/logout', routes.auth.logout;
+app.get('/', routes.home);
+app.get('/register', routes.auth.register);
+app.get('/login', routes.auth.login);
+app.get('/logout', routes.auth.logout);
 ```
 
 The `routes` variable above is the equivalent of this:
 
 ```javascript
-{
+var routes = {
   home: require('routes/home.js'),
   auth: {
     login: require('routes/auth/login.js'),
     logout: require('routes/auth/logout.js'),
     register: require('routes/auth/register.js'),
   }
-}
+};
 ```
 
 *Note that `routes.index` will be `undefined` as you would hope.*
