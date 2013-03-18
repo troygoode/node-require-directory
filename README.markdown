@@ -23,7 +23,7 @@ A common pattern in node.js is to include an index file which creates a hash of 
 * routes/auth/logout.js
 * routes/auth/register.js
 
-`routes/index.js` uses `require-directory` to build the hash rather than doing so manually:
+`routes/index.js` uses `require-directory` to build the hash (rather than doing so manually) like so:
 
 ```javascript
 var requireDirectory = require('require-directory');
@@ -65,6 +65,13 @@ You can specify which directory you want to build a tree of (if it isn't the cur
 ```javascript
 var requireDirectory = require('require-directory');
 module.exports = requireDirectory(module, __dirname + '/some/subdirectory');
+```
+
+For example, in the [example in the Usage section](#usage) we could have avoided creating `routes/index.js` and instead changed the first lines of `app.js` to:
+
+```javascript
+var requireDirectory = require('require-directory');
+var routes = requireDirectory(module, __dirname + '/routes');
 ```
 
 ### Blacklisting/Whitelisting
