@@ -51,7 +51,7 @@ var routes = {
   auth: {
     login: require('routes/auth/login.js'),
     logout: require('routes/auth/logout.js'),
-    register: require('routes/auth/register.js'),
+    register: require('routes/auth/register.js')
   }
 };
 ```
