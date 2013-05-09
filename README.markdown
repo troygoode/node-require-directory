@@ -4,6 +4,8 @@ Recursively iterates over specified directory, requiring each file, and returnin
 
 [![build status](https://secure.travis-ci.org/TroyGoode/node-require-directory.png)](http://travis-ci.org/TroyGoode/node-require-directory)
 
+[Tips are welcome, but not expected.](https://www.gittip.com/TroyGoode/)
+
 ## How To Use
 
 ### Installation (via [npm](https://npmjs.org/package/require-directory))
