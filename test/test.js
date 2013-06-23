@@ -17,8 +17,8 @@ suite('require-directory', function(){
 
     test('should take an optional delegate function', function(){
       //arrange
-      var delegate = function(path){
-        if(/foo2.js$/.test(path)){
+      var delegate = function(path, filename){
+        if(/foo2.js$/.test(path) || filename[0] === '.'){
           return false;
         }else{
           return true;
