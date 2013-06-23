@@ -30,6 +30,9 @@ var requireDirectory = module.exports = function(m, path, exclude){
   // get the path of each file in specified directory, append to current tree node, recurse
   path = resolve(path);
   fs.readdirSync(path).forEach(function(filename){
+    if(filename[0] === '.'){ //ignore hidden files
+      return;
+    }
     var joined = join(path, filename);
     if(joined !== m.filename && delegate(joined)){
       if(fs.statSync(joined).isDirectory()){

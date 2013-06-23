@@ -1,7 +1,7 @@
 {
   "author": "Troy Goode <troygoode@gmail.com> (http://github.com/troygoode/)",
   "name": "require-directory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Recursively iterates over specified directory, requiring each file, and returning a nested hash structure containing those libraries.",
   "keywords": ["require", "directory", "library", "recursive"],
   "homepage": "https://github.com/troygoode/node-require-directory/",
