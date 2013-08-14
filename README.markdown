@@ -2,9 +2,9 @@
 
 Recursively iterates over specified directory, requiring each file, and returning a nested hash structure containing those libraries.
 
-[![build status](https://secure.travis-ci.org/TroyGoode/node-require-directory.png)](http://travis-ci.org/TroyGoode/node-require-directory)
+[![NPM](https://nodei.co/npm/require-directory.png?downloads=true&stars=true)](https://nodei.co/npm/require-directory/)
 
-[Tips are welcome, but not expected.](https://www.gittip.com/TroyGoode/)
+[![build status](https://secure.travis-ci.org/TroyGoode/node-require-directory.png)](http://travis-ci.org/TroyGoode/node-require-directory)
 
 ## How To Use
 
