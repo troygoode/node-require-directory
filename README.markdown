@@ -98,6 +98,19 @@ var requireDirectory = require('require-directory');
 var hash = requireDirectory(module, __dirname, check);
 ```
 
+### Callback
+
+`require-directory` takes a function as an optional fourth parameter that will be called for each module that is added to module.exports. The function has two arguments, `err` and the module.
+
+```javascript
+var callback = function(err, mod) {
+	// do something with the module, if you'd like
+	var done = mod();
+};
+var requireDirectory = require('require-directory');
+var hash = requireDirectory(module, __dirname, null, callback);
+```
+
 ## Run Unit Tests
 
 ```bash
