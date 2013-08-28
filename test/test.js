@@ -55,7 +55,7 @@ suite('require-directory', function(){
       assert.equal('foo!', index.foo);
       assert.equal(undefined, index.index);
     });
-    
+
     test('should take an optional callback', function(done) {
     	//arrange
     	var callback = function(err, mod) {
@@ -65,7 +65,7 @@ suite('require-directory', function(){
     		done();
     	};
     	var path = PATH_TO_EXAMPLE + '/fun';
-    	
+
     	//act
     	reqdir(module, path, null, callback);
     });
