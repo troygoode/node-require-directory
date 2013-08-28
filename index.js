@@ -3,7 +3,7 @@ var join = require('path').join;
 var resolve = require('path').resolve;
 var dirname = require('path').dirname;
 
-var requireDirectory = module.exports = function(m, path, exclude){
+var requireDirectory = module.exports = function(m, path, exclude, callback){
   var defaultDelegate = function(path, filename){
     return filename[0] !== '.' && /\.(js|coffee)$/i.test(filename);
   };
@@ -42,6 +42,9 @@ var requireDirectory = module.exports = function(m, path, exclude){
       if(joined !== m.filename && delegate(joined, filename)){
         var name = filename.substring(0, filename.lastIndexOf('.')); // hash node shouldn't include file extension
         retval[name] = m.require(joined);
+        if (callback && typeof(callback) == 'function') {
+        	callback(null, retval[name]);
+        }
       }
     }
   });
