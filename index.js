@@ -37,7 +37,7 @@ var requireDirectory = module.exports = function(m, path, exclude, callback){
   fs.readdirSync(path).forEach(function(filename){
     var joined = join(path, filename);
     if(fs.statSync(joined).isDirectory()){
-      retval[filename] = requireDirectory(m, joined, delegate); // this node is a directory; recurse
+      retval[filename] = requireDirectory(m, joined, delegate, callback); // this node is a directory; recurse
     }else{
       if(joined !== m.filename && delegate(joined, filename)){
         var name = filename.substring(0, filename.lastIndexOf('.')); // hash node shouldn't include file extension
