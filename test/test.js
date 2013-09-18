@@ -13,6 +13,7 @@ suite('require-directory', function(){
       assert.equal('foo!', test.foo);
       assert.equal('foo2!', test.foo2);
       assert.equal('baz!', test.bar.baz);
+      assert.deepEqual({should:'be'}, test.bun);
     });
 
     test('should take an optional delegate function', function(){
