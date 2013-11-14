@@ -4,7 +4,7 @@ Recursively iterates over specified directory, requiring each file, and returnin
 
 [![NPM](https://nodei.co/npm/require-directory.png?downloads=true&stars=true)](https://nodei.co/npm/require-directory/)
 
-[![build status](https://secure.travis-ci.org/TroyGoode/node-require-directory.png)](http://travis-ci.org/TroyGoode/node-require-directory)
+[![build status](https://secure.travis-ci.org/troygoode/node-require-directory.png)](http://travis-ci.org/troygoode/node-require-directory)
 
 ## How To Use
 
