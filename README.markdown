@@ -2,6 +2,8 @@
 
 Recursively iterates over specified directory, requiring each file, and returning a nested hash structure containing those libraries.
 
+**[Follow me (@troygoode) on Twitter!](https://twitter.com/intent/user?screen_name=troygoode)**
+
 [![NPM](https://nodei.co/npm/require-directory.png?downloads=true&stars=true)](https://nodei.co/npm/require-directory/)
 
 [![build status](https://secure.travis-ci.org/troygoode/node-require-directory.png)](http://travis-ci.org/troygoode/node-require-directory)
