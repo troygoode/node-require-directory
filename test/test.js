@@ -48,6 +48,28 @@ suite('require-directory', function(){
       assert.equal('baz!', test.bar.baz);
     });
 
+    test('should exclude an empty directory', function(){
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE);
+
+      //assert
+      assert.equal('foo!', test.foo);
+      assert.equal(undefined, test.empty);
+    });
+
+    test('should exclude directory only matching blacklist', function(){
+      //arrange
+      var blacklist = /baz.js$/;
+
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, blacklist);
+
+      //assert
+      assert.equal('foo!', test.foo);
+      assert.equal('foo2!', test.foo2);
+      assert.equal(undefined, test.bar);
+    });
+
     test('index should exclude itself', function(){
       //act
       var index = require('./example/index');
