@@ -92,5 +92,15 @@ suite('require-directory', function(){
     	//act
     	reqdir(module, path, null, callback);
     });
+    
+    test('should replace object with callback result', function() {
+    	var callback = function(err, mod) {
+    		return "test";
+    	};
+    	var path = PATH_TO_EXAMPLE + '/fun';
+
+    	var result = reqdir(module, path, null, callback);
+	assert.equal(result.do, "test");
+    });
   });
 });
