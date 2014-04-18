@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+/*global require, module*/
+var fs = require( 'fs' );
+var path = require( 'path' );
+var templatePath = __dirname + '/../templates/index.js';
+var targetPath = path.join( process.cwd(), 'index.js' );
+
+function fail( message ){
+    console.error( 'Error: ' + message );
+}
+
+if( !fs.existsSync( targetPath ) ){
+    var reader = fs.createReadStream( templatePath );
+    reader.on( "error", function( err ){
+        fail( 'could not read template file at ' + templatePath );
+    } );
+    reader.on( 'data', function( chunk ){
+        var writer = fs.createWriteStream( targetPath );
+        reader.on('close', function(){
+            writer.end();
+        });
+        writer.on( "error", function( err ){
+            fail( 'could not write index.js file at ' + targetPath );
+        } );
+        writer.on( "close", function(){
+            console.log( 'node-require-dir: index.js file generated at ' + targetPath );
+        } );
+        writer.write(chunk);
+    } )
+}else{
+    fail( 'index.js file already exists at ' + targetPath );
+}
