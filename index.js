@@ -3,12 +3,17 @@ var join = require('path').join;
 var resolve = require('path').resolve;
 var dirname = require('path').dirname;
 
-var requireDirectory = module.exports = function(m, path, exclude, callback){
+var requireDirectory = module.exports = function(m, path, exclude, recurse, callback){
   var defaultDelegate = function(path, filename){
     return filename[0] !== '.' && /\.(js|json|coffee)$/i.test(filename);
   };
   var delegate = defaultDelegate;
   var retval = {};
+
+  if(typeof(recurse) === 'function'){
+    callback = recurse;
+    recurse = true;
+  }
 
   // if no path was passed in, assume the equivelant of __dirname from caller
   if(!path){
@@ -36,7 +41,7 @@ var requireDirectory = module.exports = function(m, path, exclude, callback){
   path = resolve(path);
   fs.readdirSync(path).forEach(function(filename){
     var joined = join(path, filename);
-    if(fs.statSync(joined).isDirectory()){
+    if(fs.statSync(joined).isDirectory() && recurse !== false){
       var files = requireDirectory(m, joined, delegate, callback); // this node is a directory; recurse
       if (Object.keys(files).length){
         retval[filename] = files;
