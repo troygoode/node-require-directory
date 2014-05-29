@@ -92,5 +92,16 @@ suite('require-directory', function(){
     	//act
     	reqdir(module, path, null, callback);
     });
+
+    test('should take an optional recursion parameter which defaults to true', function(){
+      var test = reqdir(module, PATH_TO_EXAMPLE, null, null);
+      assert.equal('baz!', test.bar.baz);
+    });
+
+    test('should not recurse when the optional recursion param is set to false', function(){
+      var test = reqdir(module, PATH_TO_EXAMPLE, null, false);
+      assert.equal('foo!', test.foo);
+      assert.equal(undefined, test.bar);
+    });
   });
 });
