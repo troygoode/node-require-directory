@@ -79,6 +79,19 @@ suite('require-directory', function(){
       assert.equal(undefined, index.index);
     });
 
+    test('should take an optional camelCase boolean', function() {
+      //arrange
+      var camelCase = true;
+
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, null, true);
+
+      //assert
+      assert.equal('already camel!', test.camelCase.alreadyCamelCase);
+      assert.equal('spinal!', test.camelCase.spinalCase);
+      assert.equal('snake!', test.camelCase.snakeCase);
+    });
+
     test('should take an optional callback', function(done) {
     	//arrange
     	var callback = function(err, mod) {
@@ -90,7 +103,7 @@ suite('require-directory', function(){
     	var path = PATH_TO_EXAMPLE + '/fun';
 
     	//act
-    	reqdir(module, path, null, callback);
+    	reqdir(module, path, null, null, callback);
     });
   });
 });
