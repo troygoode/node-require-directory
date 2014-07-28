@@ -10,9 +10,14 @@ var requireDirectory = module.exports = function(m, path, exclude, callback){
   var delegate = defaultDelegate;
   var retval = {};
 
-  // if no path was passed in, assume the equivelant of __dirname from caller
+  // if no path was passed in, assume the equivelant of __dirname from caller.
+  // otherwise, resolve path relative to the equivelant of __dirname
   if(!path){
     path = dirname(m.filename);
+  }else{
+    console.log(dirname(m.filename))
+    console.log(resolve(dirname(m.filename), path))
+    path = resolve(dirname(m.filename), path);
   }
 
   // if a RegExp was passed in as exclude, create a delegate that blacklists that RegExp

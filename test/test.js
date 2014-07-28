@@ -1,6 +1,6 @@
 var assert = require('assert');
 var reqdir = require('../index');
-var PATH_TO_EXAMPLE = './test/example'; //path is slight weird because of mocha's module scoping
+var PATH_TO_EXAMPLE = './example'; //path is slight weird because of mocha's module scoping
 
 suite('require-directory', function(){
   suite('#', function(){
@@ -91,6 +91,17 @@ suite('require-directory', function(){
 
     	//act
     	reqdir(module, path, null, callback);
+    });
+
+    test('should resolve path relative to __dirname', function(){
+      //act
+      var bar = reqdir(module, './example/bar');
+      var fun = reqdir(module, './example/fun');
+      var funResult = fun.do();
+
+      //assert
+      assert.equal('baz!', bar.baz);
+      assert.equal('gone and done it', funResult);
     });
   });
 });
