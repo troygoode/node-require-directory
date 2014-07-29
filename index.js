@@ -11,6 +11,9 @@
       recurse: true,
       rename: function (name) {
         return name;
+      },
+      visit: function (obj) {
+        return obj;
       }
     };
 
@@ -69,22 +72,18 @@
     fs.readdirSync(path).forEach(function (filename) {
       var joined = join(path, filename),
         files,
-        name,
+        key,
         obj;
       if (fs.statSync(joined).isDirectory() && options.recurse) {
         files = requireDirectory(m, joined, options); // this node is a directory; recurse
-        if (Object.keys(files).length) { // include JSON files
-          retval[options.rename(filename)] = files;
+        if (Object.keys(files).length) { // exclude empty directories
+          retval[options.rename(filename, joined, filename)] = files;
         }
       } else {
         if (joined !== m.filename && includeFile(joined, filename)) {
-          name = filename.substring(0, filename.lastIndexOf('.')); // hash node shouldn't include file extension
+          key = filename.substring(0, filename.lastIndexOf('.')); // hash node key shouldn't include file extension
           obj = m.require(joined);
-          if (options.visit && typeof(options.visit) === 'function') {
-            retval[options.rename(name)] = options.visit(obj) || obj;
-          } else {
-            retval[options.rename(name)] = obj;
-          }
+          retval[options.rename(key, joined, filename)] = options.visit(obj, joined, filename) || obj;
         }
       }
     });
