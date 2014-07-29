@@ -35,6 +35,14 @@
       assert.equal('be', test.bun.should);
     });
 
+    test('should be able to exclude path and still pass options', function () {
+      //act
+      var test = reqdir(module, {extensions: ['json']});
+
+      //assert
+      assert.equal('be', test.example.bun.should);
+    });
+
     test('should work with nested folders', function () {
       //arrange
       //act

@@ -18,6 +18,12 @@
     var retval = {},
       includeFile = null;
 
+    // path is optional
+    if (path && !options && !_.isString(path)) {
+      options = path;
+      path = null;
+    }
+
     // default options
     options = _.defaults(options || {}, defaultOptions);
 

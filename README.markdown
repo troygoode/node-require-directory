@@ -82,6 +82,8 @@ var routes = requireDirectory(module, './routes');
 
 ## Options
 
+You can pass an options hash to `require-directory` as the 2nd parameter (or 3rd if you're passing the path to another directory as the 2nd parameter already). Here are the available options:
+
 ### Whitelisting
 
 Whitelisting (either via RegExp or function) allows you to specify that only certain files be loaded.
@@ -89,7 +91,7 @@ Whitelisting (either via RegExp or function) allows you to specify that only cer
 ```javascript
 var requireDirectory = require('require-directory'),
   whitelist = /onlyinclude.js$/,
-  hash = requireDirectory(module, null, {include: whitelist});
+  hash = requireDirectory(module, {include: whitelist});
 ```
 
 ```javascript
@@ -101,7 +103,7 @@ var requireDirectory = require('require-directory'),
       return false; // go ahead and include
     }
   },
-  hash = requireDirectory(module, null, {include: check});
+  hash = requireDirectory(module, {include: check});
 ```
 
 ### Blacklisting
@@ -111,7 +113,7 @@ Blacklisting (either via RegExp or function) allows you to specify that all but 
 ```javascript
 var requireDirectory = require('require-directory'),
   blacklist = /dontinclude.js$/,
-  hash = requireDirectory(module, null, {exclude: blacklist});
+  hash = requireDirectory(module, {exclude: blacklist});
 ```
 
 ```javascript
@@ -123,7 +125,7 @@ var requireDirectory = require('require-directory'),
       return true; // go ahead and include
     }
   },
-  hash = requireDirectory(module, null, {exclude: check});
+  hash = requireDirectory(module, {exclude: check});
 ```
 
 ### Visiting Objects As They're Loaded
@@ -135,7 +137,7 @@ var requireDirectory = require('require-directory'),
   visitor = function(obj) {
     console.log(obj); // will be called for every module that is loaded
   },
-  hash = requireDirectory(module, null, {visit: visitor});
+  hash = requireDirectory(module, {visit: visitor});
 ```
 
 The visitor can also transform the objects by returning a value:
@@ -145,7 +147,7 @@ var requireDirectory = require('require-directory'),
   visitor = function(obj) {
     return obj(new Date());
   },
-  hash = requireDirectory(module, null, {visit: visitor});
+  hash = requireDirectory(module, {visit: visitor});
 ```
 
 ### Renaming Keys
@@ -155,14 +157,14 @@ var requireDirectory = require('require-directory'),
   renamer = function(name) {
     return name.toUpperCase();
   },
-  hash = requireDirectory(module, null, {rename: renamer});
+  hash = requireDirectory(module, {rename: renamer});
 ```
 
 ### No Recursion
 
 ```javascript
 var requireDirectory = require('require-directory'),
-  hash = requireDirectory(module, null, {recurse: false});
+  hash = requireDirectory(module, {recurse: false});
 ```
 
 ## Run Unit Tests
