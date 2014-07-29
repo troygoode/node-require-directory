@@ -1,6 +1,6 @@
 # require-directory
 
-Recursively iterates over specified directory, requiring each file, and returning a nested hash structure containing those libraries.
+Recursively iterates over specified directory, `require()`'ing each file, and returning a nested hash structure containing those modules.
 
 **[Follow me (@troygoode) on Twitter!](https://twitter.com/intent/user?screen_name=troygoode)**
 
@@ -68,54 +68,105 @@ You can specify which directory you want to build a tree of (if it isn't the cur
 
 ```javascript
 var requireDirectory = require('require-directory');
-module.exports = requireDirectory(module, __dirname + '/some/subdirectory');
+module.exports = requireDirectory(module, './some/subdirectory');
 ```
 
 For example, in the [example in the Usage section](#usage) we could have avoided creating `routes/index.js` and instead changed the first lines of `app.js` to:
 
 ```javascript
 var requireDirectory = require('require-directory');
-var routes = requireDirectory(module, __dirname + '/routes');
+var routes = requireDirectory(module, './routes');
 ```
 
-### Blacklisting/Whitelisting
+## Options
 
-`require-directory` takes an optional third parameter that defines which files that should not be included in the hash/tree via either a RegExp or a function. If you pass a function in, it should take a single argument (the path to a file) and return true if that file should be included in the tree. If you pass a RegExp it will be considered a blacklist - files that match that RegExp will **not** be included in the tree:
+### Whitelisting
+
+Whitelisting (either via RegExp or function) allows you to specify that only certain files be loaded.
 
 ```javascript
-var blacklist = /dontinclude.js$/;
-var requireDirectory = require('require-directory');
-var hash = requireDirectory(module, __dirname, blacklist);
+var requireDirectory = require('require-directory'),
+  whitelist = /onlyinclude.js$/,
+  hash = requireDirectory(module, null, {include: whitelist});
 ```
 
 ```javascript
-var check = function(path){
-  if(/dontinclude.js$/.test(path)){
-    return false; // don't include
-  }else{
-    return true; // go ahead and include
-  }
-};
-var requireDirectory = require('require-directory');
-var hash = requireDirectory(module, __dirname, check);
+var requireDirectory = require('require-directory'),
+  check = function(path){
+    if(/onlyinclude.js$/.test(path)){
+      return true; // don't include
+    }else{
+      return false; // go ahead and include
+    }
+  },
+  hash = requireDirectory(module, null, {include: check});
 ```
 
-### Callback
+### Blacklisting
 
-`require-directory` takes a function as an optional fourth parameter that will be called for each module that is added to module.exports. The function has two arguments, `err` and the module.
+Blacklisting (either via RegExp or function) allows you to specify that all but certain files should be loaded.
 
 ```javascript
-var callback = function(err, mod) {
-	// do something with the module, if you'd like
-	var done = mod();
-};
-var requireDirectory = require('require-directory');
-var hash = requireDirectory(module, __dirname, null, callback);
+var requireDirectory = require('require-directory'),
+  blacklist = /dontinclude.js$/,
+  hash = requireDirectory(module, null, {exclude: blacklist});
+```
+
+```javascript
+var requireDirectory = require('require-directory'),
+  check = function(path){
+    if(/dontinclude.js$/.test(path)){
+      return false; // don't include
+    }else{
+      return true; // go ahead and include
+    }
+  },
+  hash = requireDirectory(module, null, {exclude: check});
+```
+
+### Visiting Objects As They're Loaded
+
+`require-directory` takes a function as the `visit` option that will be called for each module that is added to module.exports.
+
+```javascript
+var requireDirectory = require('require-directory'),
+  visitor = function(obj) {
+    console.log(obj); // will be called for every module that is loaded
+  },
+  hash = requireDirectory(module, null, {visit: visitor});
+```
+
+The visitor can also transform the objects by returning a value:
+
+```javascript
+var requireDirectory = require('require-directory'),
+  visitor = function(obj) {
+    return obj(new Date());
+  },
+  hash = requireDirectory(module, null, {visit: visitor});
+```
+
+### Renaming Keys
+
+```javascript
+var requireDirectory = require('require-directory'),
+  renamer = function(name) {
+    return name.toUpperCase();
+  },
+  hash = requireDirectory(module, null, {rename: renamer});
+```
+
+### No Recursion
+
+```javascript
+var requireDirectory = require('require-directory'),
+  hash = requireDirectory(module, null, {recurse: false});
 ```
 
 ## Run Unit Tests
 
 ```bash
+$ npm run lint
 $ npm test
 ```
 
@@ -126,3 +177,4 @@ $ npm test
 ## Author
 
 [Troy Goode](https://github.com/TroyGoode) ([troygoode@gmail.com](mailto:troygoode@gmail.com))
+

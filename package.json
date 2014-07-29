@@ -2,7 +2,7 @@
   "author": "Troy Goode <troygoode@gmail.com> (http://github.com/troygoode/)",
   "name": "require-directory",
   "version": "2.0.0",
-  "description": "Recursively iterates over specified directory, requiring each file, and returning a nested hash structure containing those libraries.",
+  "description": "Recursively iterates over specified directory, require()'ing each file, and returning a nested hash structure containing those modules.",
   "keywords": [
     "require",
     "directory",
