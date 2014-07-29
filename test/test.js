@@ -102,18 +102,30 @@
       assert.equal(undefined, index.index);
     });
 
-    test('should take an optional callback', function (done) {
+    test('should take an optional visitor function', function () {
       //arrange
-      var callback = function (err, mod) {
-          var result = mod();
+      var visitor = function (obj) {
           //assert
-          assert.equal('gone and done it', result);
-          done();
+          assert.equal('gone and done it', obj());
         },
         path = PATH_TO_EXAMPLE + '/fun';
 
       //act
-      reqdir(module, path, {visit: callback});
+      reqdir(module, path, {visit: visitor});
+    });
+
+    test('visitor function should be able to modify object', function () {
+      //arrange
+      var visitor = function () {
+          return 'modified';
+        },
+        path = PATH_TO_EXAMPLE + '/fun';
+
+      //act
+      var test = reqdir(module, path, {visit: visitor});
+
+      //assert
+      assert.equal('modified', test.do);
     });
   });
 

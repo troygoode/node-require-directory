@@ -49,10 +49,12 @@
         }
       } else {
         if (joined !== m.filename && delegate(joined, filename)) {
-          var name = filename.substring(0, filename.lastIndexOf('.')); // hash node shouldn't include file extension
-          retval[name] = m.require(joined);
+          var name = filename.substring(0, filename.lastIndexOf('.')), // hash node shouldn't include file extension
+            obj = m.require(joined);
           if (options.visit && typeof(options.visit) === 'function') {
-            options.visit(null, retval[name]);
+            retval[name] = options.visit(obj) || obj;
+          } else {
+            retval[name] = obj;
           }
         }
       }
