@@ -22,6 +22,16 @@
       var test = reqdir(module, PATH_TO_EXAMPLE);
 
       //assert
+      assert.equal('foo!', test.foo);
+      assert.equal('be', test.bun.should);
+    });
+
+    test('should be able to specify supported extensions', function () {
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, {extensions: ['json']});
+
+      //assert
+      assert.equal(undefined, test.foo);
       assert.equal('be', test.bun.should);
     });
 
@@ -75,6 +85,34 @@
 
       //act
       var test = reqdir(module, PATH_TO_EXAMPLE, {include: whitelist});
+
+      //assert
+      assert.equal('foo!', test.foo);
+      assert.equal('foo2!', test.foo2);
+      assert.equal(undefined, test.bun);
+    });
+
+    test('should take an optional blacklist function', function () {
+      //arrange
+      var delegate = function (path) {
+        return (/foo2.js$/.test(path)) && /\.js$/.test(path);
+      };
+
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, {exclude: delegate});
+
+      //assert
+      assert.equal('foo!', test.foo);
+      assert.equal(undefined, test.foo2);
+      assert.equal('baz!', test.bar.baz);
+    });
+
+    test('should take an optional regex blacklist definition', function () {
+      //arrange
+      var blacklist = /bun\.json$/;
+
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, {exclude: blacklist});
 
       //assert
       assert.equal('foo!', test.foo);

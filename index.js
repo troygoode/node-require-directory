@@ -15,11 +15,8 @@
     };
 
   function requireDirectory(m, path, options) {
-    var defaultDelegate = function (path, filename) {
-        return filename[0] !== '.' && /\.(js|json|coffee)$/i.test(filename);
-      },
-      delegate = defaultDelegate,
-      retval = {};
+    var retval = {},
+      includeFile = null;
 
     // default options
     options = _.defaults(options || {}, defaultOptions);
@@ -32,36 +29,51 @@
       path = resolve(dirname(m.filename), path);
     }
 
-    // if a RegExp was passed in as exclude, create a delegate that blacklists that RegExp
-    // if a function was passed in as exclude, use that function as the delegate
-    // default to an always-yes delegate
-    if (options.include instanceof RegExp) {
-      delegate = function (path, filename) {
-        if (!defaultDelegate(path, filename)) {
-          return false;
-        } else if (options.include.test(path)) {
-          return true;
-        } else {
-          return false;
-        }
-      };
-    } else if (options.include && {}.toString.call(options.include) === '[object Function]') {
-      delegate = options.include;
-    }
+    includeFile = function (path, filename) {
+      // verify file has valid extension
+      if (!new RegExp('\\.(' + options.extensions.join('|') + ')$', 'i').test(filename)) {
+        return false;
+      }
+
+      // if options.include is a RegExp, evaluate it and make sure the path passes
+      if (options.include && options.include instanceof RegExp && !options.include.test(path)) {
+        return false;
+      }
+
+      // if options.include is a function, evaluate it and make sure the path passes
+      if (options.include && _.isFunction(options.include) && !options.include(path, filename)) {
+        return false;
+      }
+
+      // if options.exclude is a RegExp, evaluate it and make sure the path doesn't pass
+      if (options.exclude && options.exclude instanceof RegExp && options.exclude.test(path)) {
+        return false;
+      }
+
+      // if options.exclude is a function, evaluate it and make sure the path doesn't pass
+      if (options.exclude && _.isFunction(options.exclude) && options.exclude(path, filename)) {
+        return false;
+      }
+
+      return true;
+    };
 
     // get the path of each file in specified directory, append to current tree node, recurse
     path = resolve(path);
     fs.readdirSync(path).forEach(function (filename) {
-      var joined = join(path, filename);
+      var joined = join(path, filename),
+        files,
+        name,
+        obj;
       if (fs.statSync(joined).isDirectory() && options.recurse) {
-        var files = requireDirectory(m, joined, options); // this node is a directory; recurse
-        if (Object.keys(files).length) {
+        files = requireDirectory(m, joined, options); // this node is a directory; recurse
+        if (Object.keys(files).length) { // include JSON files
           retval[options.rename(filename)] = files;
         }
       } else {
-        if (joined !== m.filename && delegate(joined, filename)) {
-          var name = filename.substring(0, filename.lastIndexOf('.')), // hash node shouldn't include file extension
-            obj = m.require(joined);
+        if (joined !== m.filename && includeFile(joined, filename)) {
+          name = filename.substring(0, filename.lastIndexOf('.')); // hash node shouldn't include file extension
+          obj = m.require(joined);
           if (options.visit && typeof(options.visit) === 'function') {
             retval[options.rename(name)] = options.visit(obj) || obj;
           } else {
