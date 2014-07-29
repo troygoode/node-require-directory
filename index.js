@@ -1,10 +1,15 @@
 (function () {
   'use strict';
 
-  var fs = require('fs'),
+  var _ = require('underscore'),
+    fs = require('fs'),
     join = require('path').join,
     resolve = require('path').resolve,
-    dirname = require('path').dirname;
+    dirname = require('path').dirname,
+    defaultOptions = {
+      extensions: ['js', 'json', 'coffee'],
+      recurse: true
+    };
 
   function requireDirectory(m, path, options) {
     var defaultDelegate = function (path, filename) {
@@ -14,7 +19,7 @@
       retval = {};
 
     // default options
-    options = options || {};
+    options = _.defaults(options || {}, defaultOptions);
 
     // if no path was passed in, assume the equivelant of __dirname from caller
     if (!path) {
@@ -42,7 +47,7 @@
     path = resolve(path);
     fs.readdirSync(path).forEach(function (filename) {
       var joined = join(path, filename);
-      if (fs.statSync(joined).isDirectory()) {
+      if (fs.statSync(joined).isDirectory() && options.recurse) {
         var files = requireDirectory(m, joined, options); // this node is a directory; recurse
         if (Object.keys(files).length) {
           retval[filename] = files;
@@ -63,6 +68,7 @@
   }
 
   module.exports = requireDirectory;
+  module.exports.defaults = defaultOptions;
 
 }());
 

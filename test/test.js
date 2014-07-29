@@ -35,6 +35,16 @@
       assert.equal('baz!', test.bar.baz);
     });
 
+    test('should be able to disable recursion', function () {
+      //arrange
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, {recurse: false});
+
+      //assert
+      assert.equal('foo!', test.foo);
+      assert.equal(undefined, test.bar);
+    });
+
     test('should work with empty folder', function () {
       //arrange
       //act
