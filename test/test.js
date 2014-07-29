@@ -35,14 +35,19 @@
       assert.equal('baz!', test.bar.baz);
     });
 
-    test('should take an optional delegate function', function () {
+    test('should work with empty folder', function () {
       //arrange
-      var delegate = function (path, filename) {
-        if (/foo2.js$/.test(path) || filename[0] === '.') {
-          return false;
-        } else {
-          return true;
-        }
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE + '/empty');
+
+      //assert
+      assert.equal(0, Object.keys(test).length); // should be an empty object: {}
+    });
+
+    test('should take an optional whitelist function', function () {
+      //arrange
+      var delegate = function (path) {
+        return !(/foo2.js$/.test(path)) && /\.js$/.test(path);
       };
 
       //act
