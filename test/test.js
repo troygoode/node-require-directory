@@ -137,6 +137,20 @@
       //assert
       assert.equal('modified', test.do);
     });
+
+    test('should be able to rename keys', function () {
+      //arrange
+      var nameVisitor = function (name) {
+          return name.toUpperCase();
+        },
+        path = PATH_TO_EXAMPLE;
+
+      //act
+      var test = reqdir(module, path, {rename: nameVisitor});
+
+      //assert
+      assert.equal('foo!', test.FOO);
+    });
   });
 
 }());

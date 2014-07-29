@@ -8,7 +8,10 @@
     dirname = require('path').dirname,
     defaultOptions = {
       extensions: ['js', 'json', 'coffee'],
-      recurse: true
+      recurse: true,
+      rename: function (name) {
+        return name;
+      }
     };
 
   function requireDirectory(m, path, options) {
@@ -50,16 +53,16 @@
       if (fs.statSync(joined).isDirectory() && options.recurse) {
         var files = requireDirectory(m, joined, options); // this node is a directory; recurse
         if (Object.keys(files).length) {
-          retval[filename] = files;
+          retval[options.rename(filename)] = files;
         }
       } else {
         if (joined !== m.filename && delegate(joined, filename)) {
           var name = filename.substring(0, filename.lastIndexOf('.')), // hash node shouldn't include file extension
             obj = m.require(joined);
           if (options.visit && typeof(options.visit) === 'function') {
-            retval[name] = options.visit(obj) || obj;
+            retval[options.rename(name)] = options.visit(obj) || obj;
           } else {
-            retval[name] = obj;
+            retval[options.rename(name)] = obj;
           }
         }
       }
