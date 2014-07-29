@@ -25,8 +25,11 @@
     options = _.defaults(options || {}, defaultOptions);
 
     // if no path was passed in, assume the equivelant of __dirname from caller
+    // otherwise, resolve path relative to the equivalent of __dirname
     if (!path) {
       path = dirname(m.filename);
+    } else {
+      path = resolve(dirname(m.filename), path);
     }
 
     // if a RegExp was passed in as exclude, create a delegate that blacklists that RegExp

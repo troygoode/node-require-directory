@@ -4,7 +4,7 @@
 
   var assert = require('assert'),
     reqdir = require('../index'),
-    PATH_TO_EXAMPLE = './test/example'; //path is slight weird because of mocha's module scoping
+    PATH_TO_EXAMPLE = './example';
 
   suite('require-directory', function () {
     test('should work with JS', function () {
@@ -150,6 +150,18 @@
 
       //assert
       assert.equal('foo!', test.FOO);
+    });
+
+    test('should resolve path relative to __dirname', function () {
+      //arrange
+      //act
+      var bar = reqdir(module, './example/bar'),
+        fun = reqdir(module, './example/fun'),
+        funResult = fun.do();
+
+      //assert
+      assert.equal('baz!', bar.baz);
+      assert.equal('gone and done it', funResult);
     });
   });
 
