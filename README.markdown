@@ -21,11 +21,13 @@ $ npm install require-directory
 A common pattern in node.js is to include an index file which creates a hash of the files in its current directory. Given a directory structure like so:
 
 * app.js
-* routes/index.js
-* routes/home.js
-* routes/auth/login.js
-* routes/auth/logout.js
-* routes/auth/register.js
+* routes/
+  * index.js
+  * home.js
+  * auth/
+    * login.js
+    * logout.js
+    * register.js
 
 `routes/index.js` uses `require-directory` to build the hash (rather than doing so manually) like so:
 
