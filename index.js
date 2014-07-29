@@ -46,7 +46,7 @@ var requireDirectory = module.exports = function(m, path, exclude, callback){
         var name = filename.substring(0, filename.lastIndexOf('.')); // hash node shouldn't include file extension
         retval[name] = m.require(joined);
         if (callback && typeof(callback) === 'function') {
-          callback(null, retval[name]);
+          retval[name] = callback(null, retval[name]) || retval[name];
         }
       }
     }
