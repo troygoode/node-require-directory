@@ -112,14 +112,14 @@ Blacklisting (either via RegExp or function) allows you to specify that all but 
 
 ```javascript
 var requireDirectory = require('require-directory'),
-  blacklist = /dontinclude.js$/,
+  blacklist = /dontinclude\.js$/,
   hash = requireDirectory(module, {exclude: blacklist});
 ```
 
 ```javascript
 var requireDirectory = require('require-directory'),
   check = function(path){
-    if(/dontinclude.js$/.test(path)){
+    if(/dontinclude\.js$/.test(path)){
       return false; // don't include
     }else{
       return true; // go ahead and include
