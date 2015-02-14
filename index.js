@@ -1,8 +1,7 @@
 (function () {
   'use strict';
 
-  var _ = require('underscore'),
-    fs = require('fs'),
+  var fs = require('fs'),
     join = require('path').join,
     resolve = require('path').resolve,
     dirname = require('path').dirname,
@@ -22,13 +21,18 @@
       includeFile = null;
 
     // path is optional
-    if (path && !options && !_.isString(path)) {
+    if (path && !options && typeof path !== 'string') {
       options = path;
       path = null;
     }
 
     // default options
-    options = _.defaults(options || {}, defaultOptions);
+    options = options || {};
+    for (var prop in defaultOptions) {
+      if (typeof options[prop] === 'undefined') {
+        options[prop] = defaultOptions[prop];
+      }
+    }
 
     // if no path was passed in, assume the equivelant of __dirname from caller
     // otherwise, resolve path relative to the equivalent of __dirname
@@ -50,7 +54,7 @@
       }
 
       // if options.include is a function, evaluate it and make sure the path passes
-      if (options.include && _.isFunction(options.include) && !options.include(path, filename)) {
+      if (options.include && typeof options.include === 'function' && !options.include(path, filename)) {
         return false;
       }
 
@@ -60,7 +64,7 @@
       }
 
       // if options.exclude is a function, evaluate it and make sure the path doesn't pass
-      if (options.exclude && _.isFunction(options.exclude) && options.exclude(path, filename)) {
+      if (options.exclude && typeof options.exclude === 'function' && options.exclude(path, filename)) {
         return false;
       }
 
