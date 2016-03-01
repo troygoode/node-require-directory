@@ -98,9 +98,9 @@ var requireDirectory = require('require-directory'),
 var requireDirectory = require('require-directory'),
   check = function(path){
     if(/onlyinclude.js$/.test(path)){
-      return true; // don't include
+      return true; // go ahead and include
     }else{
-      return false; // go ahead and include
+      return false; // don't include
     }
   },
   hash = requireDirectory(module, {include: check});
