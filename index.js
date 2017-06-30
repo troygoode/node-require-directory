@@ -74,7 +74,7 @@ function requireDirectory(m, path, options) {
         // hash node key shouldn't include file extension
         key = filename.substring(0, filename.lastIndexOf('.'));
         obj = m.require(joined);
-        obj = typeof obj === 'function' ? obj : obj.default ? obj.default : obj;
+        obj = obj && obj.default ? obj.default : obj;
         retval[options.rename(key, joined, filename)] = options.visit(obj, joined, filename) || obj;
       }
     }
