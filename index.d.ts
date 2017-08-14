@@ -1,19 +1,19 @@
 /// <reference types="node" />
 
-interface RequireDirectoryResult {
-    [index: string]: RequireDirectoryResult | any;
+interface RequireDirectoryResult<T> {
+    [index: string]: RequireDirectoryResult<T> | T;
 }
 
-interface RequireDirectoryOptions {
+interface RequireDirectoryOptions<T, U = T> {
     extensions?: string[];
     recurse?: boolean;
     rename?(name: string): string;
-    visit?(obj: any): any;
+    visit?(obj: T): U;
 }
 
 interface RequireDirectory {
-    (m: NodeModule, path?: string | RequireDirectoryOptions, options?: RequireDirectoryOptions): RequireDirectoryResult
-    defaults: RequireDirectoryOptions;
+    <T, U>(m: NodeModule, path?: string | RequireDirectoryOptions<T, U>, options?: RequireDirectoryOptions<T, U>): RequireDirectoryResult<U>
+    defaults: RequireDirectoryOptions<any>;
 }
 declare const requireDirectory: RequireDirectory;
 
