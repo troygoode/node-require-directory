@@ -11,6 +11,7 @@
   ],
   "homepage": "https://github.com/troygoode/node-require-directory/",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/troygoode/node-require-directory.git"
@@ -30,6 +31,7 @@
     "node": ">=0.10.0"
   },
   "devDependencies": {
+    "@types/node": "^8.0.20",
     "jshint": "^2.6.0",
     "mocha": "^2.1.0"
   },
