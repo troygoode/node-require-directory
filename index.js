@@ -18,7 +18,7 @@ var fs = require('fs'),
 function checkFileInclusion(path, filename, options) {
   return (
     // verify file has valid extension
-    (new RegExp('\\.(' + options.extensions.join('|') + ')$', 'i').test(filename)) &&
+    (new RegExp('^(' + options.extensions.join('|') + ')$', 'i').test((filename.match(/\.(.+)/) || ['']).pop())) &&
 
     // if options.include is a RegExp, evaluate it and make sure the path passes
     !(options.include && options.include instanceof RegExp && !options.include.test(path)) &&
@@ -60,7 +60,8 @@ function requireDirectory(m, path, options) {
     var joined = join(path, filename),
       files,
       key,
-      obj;
+      obj,
+      dotId;
 
     if (fs.statSync(joined).isDirectory() && options.recurse) {
       // this node is a directory; recurse
@@ -72,7 +73,8 @@ function requireDirectory(m, path, options) {
     } else {
       if (joined !== m.filename && checkFileInclusion(joined, filename, options)) {
         // hash node key shouldn't include file extension
-        key = filename.substring(0, filename.lastIndexOf('.'));
+        dotId = filename.lastIndexOf('.');
+        key = filename.substring(0, dotId < 0 ? filename.length : dotId);
         obj = m.require(joined);
         retval[options.rename(key, joined, filename)] = options.visit(obj, joined, filename) || obj;
       }

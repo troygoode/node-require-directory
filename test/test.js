@@ -28,11 +28,12 @@
 
     test('should be able to specify supported extensions', function () {
       //act
-      var test = reqdir(module, PATH_TO_EXAMPLE, {extensions: ['json']});
+      var test = reqdir(module, PATH_TO_EXAMPLE, {extensions: ['json', '']});
 
       //assert
       assert.equal(undefined, test.foo);
       assert.equal('be', test.bun.should);
+      assert.equal('noext!', test.noext);
     });
 
     test('should be able to exclude path and still pass options', function () {
