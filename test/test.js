@@ -26,6 +26,15 @@
       assert.equal('be', test.bun.should);
     });
 
+    test('should work with TS', function () {
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE);
+
+      //assert
+      assert.equal('foo!', test.foo);
+      assert.equal('foo3!', test.foo3);
+    });
+
     test('should be able to specify supported extensions', function () {
       //act
       var test = reqdir(module, PATH_TO_EXAMPLE, {extensions: ['json']});
