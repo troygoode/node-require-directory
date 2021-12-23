@@ -5,7 +5,7 @@ var fs = require('fs'),
   resolve = require('path').resolve,
   dirname = require('path').dirname,
   defaultOptions = {
-    extensions: ['js', 'json', 'coffee'],
+    extensions: ['js', 'json', 'coffee', 'ts'],
     recurse: true,
     rename: function (name) {
       return name;
