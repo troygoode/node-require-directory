@@ -7,6 +7,7 @@ var fs = require('fs'),
   defaultOptions = {
     extensions: ['js', 'json', 'coffee'],
     recurse: true,
+    maxDepth: -1, // no max depth
     rename: function (name) {
       return name;
     },
@@ -34,7 +35,7 @@ function checkFileInclusion(path, filename, options) {
   );
 }
 
-function requireDirectory(m, path, options) {
+function _requireDirectory(m, path, options, depth) {
   var retval = {};
 
   // path is optional
@@ -62,9 +63,9 @@ function requireDirectory(m, path, options) {
       key,
       obj;
 
-    if (fs.statSync(joined).isDirectory() && options.recurse) {
+    if (fs.statSync(joined).isDirectory() && options.recurse && (options.maxDepth < 0 || depth < options.maxDepth)) {
       // this node is a directory; recurse
-      files = requireDirectory(m, joined, options);
+      files = _requireDirectory(m, joined, options, depth + 1);
       // exclude empty directories
       if (Object.keys(files).length) {
         retval[options.rename(filename, joined, filename)] = files;
@@ -80,6 +81,10 @@ function requireDirectory(m, path, options) {
   });
 
   return retval;
+}
+
+function requireDirectory(m, path, options) {
+  return _requireDirectory(m, path, options, 0);
 }
 
 module.exports = requireDirectory;
