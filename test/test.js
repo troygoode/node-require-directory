@@ -209,6 +209,34 @@
       assert.equal('baz!', bar.baz);
       assert.equal('gone and done it', funResult);
     });
+
+    test('should recurse 0 times', function () {
+      //arrange
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, {maxDepth: 0});
+      //assert
+      assert.equal(undefined, test.level1);
+    });
+
+    test('should only recurse 2 times', function () {
+      //arrange
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, {maxDepth: 2});
+      //assert
+      assert.equal('one', test.level1.one);
+      assert.equal('two', test.level1.level2.two);
+      assert.equal(undefined, test.level1.level2.level3);
+    });
+
+    test('should still be able to disable recursion with maxDepth set', function () {
+      //arrange
+      //act
+      var test = reqdir(module, PATH_TO_EXAMPLE, {recurse: false, maxDepth: 2});
+
+      //assert
+      assert.equal('foo!', test.foo);
+      assert.equal(undefined, test.bar);
+    });
   });
 
 }());
